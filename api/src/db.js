@@ -95,7 +95,7 @@ const fillVideogames = async (params) => {
           await fillPlatform(onePlatformId, onePlatformName)  
         }
       
-        let videogameDescription = await axios.get('https://api.rawg.io/api/games/'+  videogame.id +'?key=c420adf274084332a43c676d14e65b4d')
+        let videogameDescription = await axios.get('https://api.rawg.io/api/games/'+  videogame.id +'?key=' + API_KEY)
          const createVideogame = await Videogame.create({
                   id: videogame.id,
                   name: videogame.name,

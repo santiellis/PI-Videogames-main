@@ -1,26 +1,46 @@
 const { Router } = require('express');
 const {Genre, Videogame} = require("../db")
+const {Op} = require("sequelize")
 const axios = require('axios')
 const router = Router();
 
-router.get("/", (req,res,next) => {
-    try {
-        let DBPromiseGenre = Genre.findAll({
-            order: [
-                ['name', 'ASC'],
-            ],
-            include: Videogame,
-             })
-        Promise.all([
-         DBPromiseGenre
-        ])
-        .then((response) => {
-         const [
-             DBGenre
-         ] = response
-         let allGenres = [...DBGenre]
-         res.send(allGenres)
+router.get("/", async (req,res,next) => {
+        let name = req.query.name
+        let DBPromiseGenre
+        try {
+            if(name){
+                DBPromiseGenre = await Genre.findAll({
+                    where: {
+                        name:{
+                           [Op.iLike]: "%" + name + "%"}
+                    },
+                    order: [
+                        ['name', 'ASC'],
+                    ],
+                    include:[ Videogame],
+    
+                })
+            
+        }else{
+            DBPromiseGenre = await Genre.findAll({
+                    order: [
+                        ['name', 'ASC'],
+                    ],
+                    include:[ Videogame],
+    
         })
+        }
+           Promise.all([
+            DBPromiseGenre
+           ])
+           .then((response) => {
+            const [
+                DBGenre
+            ] = response
+            let allGenres = [...DBGenre]
+            res.send(allGenres)
+           })
+        
         .catch(error => next(error))
         
     } catch (error) {
@@ -76,10 +96,10 @@ router.put("/:id", async (req,res,next) => {
 router.get("/:id", async (req,res,next) => {
     try {
        const id = req.params.id
-       if (Genre.id === Videogame.genreId){
+       if (( Videogame.id === Genre.VideogameId) && Genre.name){
          let genre = await Genre.findByPk(
             id, 
-            {include: Videogame,}
+            {include: Videogame}
             )
         res.status(201).send(genre)
     }

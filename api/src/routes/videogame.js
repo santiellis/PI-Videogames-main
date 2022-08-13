@@ -5,14 +5,35 @@ const axios = require('axios')
 const router = Router();
 const key = process.env.API_KEY
 
+
+
 router.get("/", async (req,res,next) => {
+    let name = req.query.name
+    let DBPromiseGames
     try {
-        let DBPromiseGames = await Videogame.findAll({
+        if(name){
+            DBPromiseGames = await Videogame.findAll({
+                where: {
+                    name:{
+                       [Op.iLike]: "%" + name + "%"}
+                },
                 order: [
                     ['name', 'ASC'],
                 ],
                 include:[ Genre, Platform],
+               
+
             })
+        
+    }else{
+        DBPromiseGames = await Videogame.findAll({
+                order: [
+                    ['name', 'ASC'],
+                ],
+                include:[ Genre, Platform],
+
+            })
+    }
        Promise.all([
         DBPromiseGames
        ])
@@ -29,14 +50,16 @@ router.get("/", async (req,res,next) => {
     }
 })
 
+
 router.get("/:id", async (req,res,next) => {
     try {
-       const id = req.params.id
-       if (Genre.id === Videogame.genreId){
+       const {id, name} = req.params
+       if ((Genre.id === Videogame.genreId) && Videogame.name){
+        console.log(Genre.id)
+
          let game = await Videogame.findByPk(
             id, 
-            {include: Genre,
-             include: Platform   
+            {include:[ Genre, Platform]
             }
             )
         res.status(201).send(game)
@@ -47,6 +70,7 @@ router.get("/:id", async (req,res,next) => {
 })
 
 router.post("/", async (req,res,next) => {
+    console.log(req.body)
     try {
        const {name, image, description, rating, released} = req.body
        const searchByName = await Videogame.findOne({ where: { name: name } });
@@ -118,6 +142,34 @@ router.put("/:id", async (req,res,next) => {
         res.status(400).send("No se actualizo ")
     }
 })
+
+router.delete("/:VideogameId/genre/:GenreId", async (req,res,next) => {
+    try {
+        const {VideogameId, GenreId} = req.params
+     const videogame = await Videogame.findByPk(VideogameId)
+     await videogame.removeGenre(GenreId)
+     ;
+      res.status(200).send("Se borro el Genero del Videojuego correctamente")
+    } catch (error) {
+     next(error)
+     res.status(418).send("No se pudo borrar Genero el videojuego")
+    }
+ 
+ })
+
+router.delete("/:VideogameId/platform/:PlatformId", async (req,res,next) => {
+    try {
+        const {VideogameId, PlatformId} = req.params
+     const videogame = await Videogame.findByPk(VideogameId)
+     await videogame.removePlatform(PlatformId)
+     ;
+      res.status(200).send("Se borro la plataform del Videojuego correctamente")
+    } catch (error) {
+     next(error)
+     res.status(418).send("No se pudo borrar Plataforma el videojuego")
+    }
+ 
+ })
 
 router.delete("/:id", async (req,res,next) => {
    try {

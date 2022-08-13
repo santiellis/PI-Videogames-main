@@ -1,34 +1,52 @@
 const { Router } = require('express');
 const {Genre, Videogame, Platform} = require("../db")
+const {Op} = require("sequelize")
 const axios = require('axios')
 const router = Router();
 
-router.get("/", (req,res,next) => {
-    try {
-        let dbPromisePlatform = Platform.findAll({
-            order: [
-                ['name', 'ASC'],
-            ],
-            include: Videogame,
-             })
-        Promise.all([
-            dbPromisePlatform
-        ])
-        .then((response) => {
-         const [
-             dbPlaform
-         ] = response
-         let allPlatform = [...dbPlaform]
-         res.send(allPlatform)
+router.get("/", async (req,res,next) => {
+    let name = req.query.name
+        let dbPromisePlatform
+        try {
+            if(name){
+                dbPromisePlatform = await Platform.findAll({
+                    where: {
+                        name:{
+                           [Op.iLike]: "%" + name + "%"}
+                    },
+                    order: [
+                        ['name', 'ASC'],
+                    ],
+                    include:[ Videogame],
+    
+                })
+            
+        }else{
+            dbPromisePlatform = await Platform.findAll({
+                    order: [
+                        ['name', 'ASC'],
+                    ],
+                    include:[ Videogame],
+    
         })
+        }
+           Promise.all([
+            dbPromisePlatform
+           ])
+           .then((response) => {
+            const [
+                dbPlaform
+            ] = response
+            let allPlatform = [...dbPlaform]
+            res.send(allPlatform)
+           })
+        
         .catch(error => next(error))
         
     } catch (error) {
         next(error)
     }
  })
-
-
  router.post("/", async (req,res,next) => {
      try{
          const {name} = req.body
