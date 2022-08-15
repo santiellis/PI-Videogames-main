@@ -9,6 +9,9 @@ export const SORT = "SORT"
 export const DELETE_VIDEOGAME = "DELETE_VIDEOGAME"
 export const CLEAR = "CLEAR"
 export const SORT_RATING = "SORT_RATING"
+export const CREATE_PAGINATION_ARRAY = "CREATE_PAGINATION_ARRAY"
+export const CHANGE_PAGE = "CHANGE_PAGE"
+export const FILTERED = "FILTERED"
 // const {
 //     HTTPHOST
 //   } = process.env
@@ -18,13 +21,15 @@ export const SORT_RATING = "SORT_RATING"
 
 
 export function fetchVideogame(){
-    return function(dispatch){
+    return async function(dispatch){
         axios.get( "http://localhost:3001/api/Videogame/")
         .then((videogames) =>{
             dispatch({
                 type: FETCH_VIDEOGAMES,
                 payload: videogames.data, 
             })
+            dispatch(filtered())
+            dispatch(createPaginationArray())
         
         })
         .catch((error) =>{
@@ -64,22 +69,26 @@ export function fetchPlatform(){
 }
 
 
-export function search_ByGenre(value){
-    return function(dispatch){
-        axios.get( "http://localhost:3001/api/Genre?name=" + value)
-        .then((genre) =>{
-            dispatch({
-                type: SEARCH_BYGENRE,
-                payload: {data: genre.data, genreName: value}
-
-
-            })
-
-        })
-        .catch((error) =>{
-            console.log(error)
-        })
+export function search_ByGenre(genre){
+    return {
+        type: SEARCH_BYGENRE,
+        payload: genre
     }
+    // function(dispatch){
+    //     axios.get( "http://localhost:3001/api/Genre?name=" + value)
+    //     .then((genre) =>{
+    //         dispatch({
+    //             type: SEARCH_BYGENRE,
+    //             payload: {data: genre.data, genreName: value}
+
+
+    //         })
+
+    //     })
+    //     .catch((error) =>{
+    //         console.log(error)
+    //     })
+    // }
 }
 
 export function fetchGenre(){
@@ -145,6 +154,27 @@ export function sortByRating(order) {
 export function clear(payload){
     return {
         type: CLEAR,
+        payload
+    }
+}
+
+export function createPaginationArray(payload){
+    return {
+        type: CREATE_PAGINATION_ARRAY,
+        payload,
+    }
+}
+
+export function changePage(payload){
+    return{
+        type: CHANGE_PAGE,
+        payload
+    }
+}
+
+export function filtered(payload) {
+    return {
+        type: FILTERED,
         payload
     }
 }

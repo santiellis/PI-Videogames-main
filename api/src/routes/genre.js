@@ -17,9 +17,12 @@ router.get("/", async (req,res,next) => {
                     order: [
                         ['name', 'ASC'],
                     ],
-                    include:[ Videogame],
+                    include: [{
+                        model: Videogame,
+                    }]
     
                 })
+
             
         }else{
             DBPromiseGenre = await Genre.findAll({
@@ -38,6 +41,8 @@ router.get("/", async (req,res,next) => {
                 DBGenre
             ] = response
             let allGenres = [...DBGenre]
+            console.log("ALL GENRES =======>>>>>", allGenres[0].Videogames[0]
+            )
             res.send(allGenres)
            })
         

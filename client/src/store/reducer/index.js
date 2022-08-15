@@ -1,35 +1,44 @@
 import { ASCENDENTE } from "../../const/orderByName"
-import {FETCH_VIDEOGAMES, SEARCH_VIDEOGAMES, SORT, DELETE_VIDEOGAME, SEARCH_BYGENRE, SEARCH_BYPLATFORM, FETCH_PLATFORM, FETCH_GENRE, SORT_RATING, CLEAR} from "../actions"
+import {FETCH_VIDEOGAMES, FILTERED, SEARCH_VIDEOGAMES, SORT, DELETE_VIDEOGAME, SEARCH_BYGENRE, SEARCH_BYPLATFORM, FETCH_PLATFORM, FETCH_GENRE, SORT_RATING, CLEAR, CREATE_PAGINATION_ARRAY, CHANGE_PAGE} from "../actions"
 
 const initialState = {
     videogames: [],
-    filteredVideogames: [],
+    allVideogamesSaved: [],
+    orderedVideogames: [],
+    filteredVideogame: [],
     genre: "",
     filteredGenre: [],
     platform: [],
     filteredPlatform: [],
-    filtered: []
-
+    paginationArray: [],
+    currentPage: 1,
+    currentOrder: ASCENDENTE,
+    currentGenre: "Genre",
+    currentPlatform: "Platform",
+    currentRating: "Rating",
 }
 
 
 export default function reducer(state = initialState, action){
-    let filteredVideogames = [...state.filteredVideogames]
+    
+    let allVideogamesSaved = [...state.allVideogamesSaved]
     let videogame = [...state.videogames]
-
+    let orderedVideogames = [...state.orderedVideogames]
+    
     switch(action.type){
         case FETCH_VIDEOGAMES:
-        console.log(action.payload)
-
+            
             return {
                 ...state,
                 videogames: action.payload,
-                filteredVideogames:action.payload,
+                allVideogamesSaved: action.payload,
+                orderedVideogames: action.payload
+                
             }
-
-
-        case FETCH_GENRE:
-            console.log(action.payload)
+            
+            
+            case FETCH_GENRE:
+            // console.log(action.payload)
 
             return{
                     ...state,
@@ -38,7 +47,7 @@ export default function reducer(state = initialState, action){
 
             }
         case FETCH_PLATFORM:
-            console.log(action.payload)
+            // console.log(action.payload)
                 return{
                     ...state,
                     platform: action.payload,
@@ -50,36 +59,9 @@ export default function reducer(state = initialState, action){
                 ...state,
                 videogames:action.payload
             }
-        case SEARCH_BYGENRE: 
-        let filtered = [...state.filtered]
-        let genre 
-        if (action.payload.data[0].Videogames.name === filteredVideogames.name){
-            genre = action.payload.data[0].Videogames
-        }
-        return {
-            ...state,
-            genre: action.payload.genreName,
-            filtered: [...filtered, action.payload.genreName],
-            filteredVideogames: genre,
-            videogames: genre
-        }
-        case SEARCH_BYPLATFORM: 
-        console.log(action.payload)
-        console.log(videogame)
-        let platform 
-        if (action.payload[0].Videogames.name === filteredVideogames.name ){
-            platform = action.payload[0].Videogames
-        }
-
-            return {
-                ...state,
-                filteredVideogames: platform,
-                videogames: platform
-
-            }
 
         case SORT: 
-            let orderedByNameVideogames = [...state.videogames]
+            let orderedByNameVideogames = [...state.allVideogamesSaved]
 
             orderedByNameVideogames = orderedByNameVideogames.sort((a,b) => {
                 if (a.name < b.name){
@@ -92,7 +74,8 @@ export default function reducer(state = initialState, action){
             })
             return {
                 ...state,
-                videogames: orderedByNameVideogames,
+                orderedVideogames: orderedByNameVideogames,
+                currentOrder: action.payload
 
             }
 
@@ -112,6 +95,7 @@ export default function reducer(state = initialState, action){
                     return 0;
                   });
             }
+            
           return {
             ...state,
             videogames: sortByRating.map((e) => e),
@@ -129,6 +113,76 @@ export default function reducer(state = initialState, action){
                 ...state,
                 videogames:action.payload
             }    
+        
+        case CREATE_PAGINATION_ARRAY:
+            // console.log(action.payload)
+            const pageSize = 15;
+            let pageHolder = []
+
+            for (let i = 0; i < state.filteredVideogame.length; i += pageSize) {
+                                                //inicial    final
+                const page = state.filteredVideogame.slice(i, i + pageSize);
+                pageHolder.push(page)
+            }
+            // console.log("paginado ", pageHolder, allVideogamesSaved)
+        
+            return {
+                ...state,
+                paginationArray: pageHolder
+            }
+
+        case CHANGE_PAGE: 
+        console.log("PAGE CHANGE", action.payload)
+            return {
+                ...state,
+                currentPage: action.payload
+            }
+
+        case FILTERED:
+            let filteredVideogame = orderedVideogames
+
+            let filters = {
+                Genre: state.currentGenre,
+                Platform: state.currentPlatform
+            }
+
+            let key, value
+             for (let Key in action.payload){
+                key = Key
+                value = action.payload[Key]
+                filters[Key] = action.payload[Key]
+            }
+
+            if(filters.Platform !== "Platform"){
+                
+                filteredVideogame = filteredVideogame.filter((videogame) =>{
+                    console.log("vidya", videogame)
+                    for (let i = 0; i < videogame.Platforms.length; i++) { 
+                        if (videogame.Platforms[i].name === filters.Platform){
+                            return videogame
+                        }
+                    }
+                })
+            }
+
+            if(filters.Genre !== "Genre"){
+        
+                filteredVideogame = filteredVideogame.filter((videogame) =>{
+                    for (let i = 0; i < videogame.Genres.length; i++) {
+                        if (videogame.Genres[i].name === filters.Genre){
+                            return videogame
+                        }
+                    }
+                })
+            }
+
+            return {
+                ...state,
+                currentGenre: filters.Genre,
+                currentPlatform: filters.Platform,
+                filteredVideogame: filteredVideogame
+                
+            }
 
         default: 
             return state     

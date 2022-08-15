@@ -41,8 +41,9 @@ export default function VideogameDetails(){
         <div className="text" dangerouslySetInnerHTML={{__html: videogame.description}}/>
         <h3>{videogame.rating}</h3>
         <div>{genre + ""}</div>
+        <br/>
         <h3>{videogame.released}</h3>
-        <h3>{platform + " "}</h3>
+        <h3>{platform + ""}</h3>
 
         </> :
         <div>{platform}</div>

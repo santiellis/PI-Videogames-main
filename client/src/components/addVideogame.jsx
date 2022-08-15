@@ -34,36 +34,12 @@ export default function Videogame(){
         event.preventDefault()
         axios.post("http://localhost:3001/api/Videogame/", videogame)
         .then(() =>{
-            history.push("/")
+            history.push("/home")
         })
         
     }
 
-    function onSubmitGenre(event) {
-        event.preventDefault()
-        axios.post(`http://localhost:3001/api/Videogame/${videogame.id}/platform/${genre.id}`, videogame)
-    }
-
-    function onSubmitPlatform(event) {
-        event.preventDefault()
-        axios.post(`http://localhost:3001/api/Videogame/${videogame.id}/platform/${platform.id}`, videogame)
-    }
-
-    useEffect(() =>{
-        dispatch(fetchPlatform())
-        dispatch(fetchGenre())
-        console.log(dispatch(fetchPlatform()))
-        console.log(dispatch(fetchGenre()))
-
-    }, [dispatch])
-    const genre = useSelector((state) => state.genre);
-    const platform = useSelector((state) => state.platform);
-
-    console.log(genre)
-
-
     return <div id="formContainer">
-
         <form className="formItem" onSubmit={onSubmit}>
                 <input onChange={onInput} type="text" name="name" placeholder="Name..."  value={videogame.name}/>
                 <input onChange={onInput} type="text" name="image" placeholder="Image..."  value={videogame.image}/>
@@ -71,27 +47,6 @@ export default function Videogame(){
                 <input onChange={onInput} type="number" step={0.1} name="rating" placeholder="Rating..."  value={videogame.rating} />
                 <input onChange={onInput} type="date" name="released"   value={videogame.released} />
                 <div>
-                <select id="dropdown"  name="Genre"  onSubmit={onSubmitGenre}>
-                    {genre.map((e) => {
-                return (
-                  <option id={e.id} value={e.name}  >
-                    {e.name}
-                    </option>
-                    );
-                })}
-                    </select>
-                </div>
-
-                <div>
-                <select id="dropdown"  name="Platform"  onSubmit={onSubmitPlatform}>
-                    {platform.map((e) => {
-                return (
-                  <option id={e.id} value={e.name}  >
-                    {e.name}
-                    </option>
-                    );
-                })}
-                    </select>
                 </div>
                 <input type="submit"/>
             </form>

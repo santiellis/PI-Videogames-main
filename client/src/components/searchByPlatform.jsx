@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { search_ByPlatform } from "../store/actions"
+import { createPaginationArray, filtered } from "../store/actions"
 import "./searchBar.css"
 
 
@@ -8,7 +8,8 @@ export default function SearchByPlatform(){
 
     let dispatch = useDispatch()
     function onChange(event) {
-        dispatch(search_ByPlatform(event.target.value))
+        dispatch(filtered({Platform: event.target.value}))
+        dispatch(createPaginationArray())
         }
 
     return  <select  id="dropdown" className="select-style3"  onChange={onChange}>
