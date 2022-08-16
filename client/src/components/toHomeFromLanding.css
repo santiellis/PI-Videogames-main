@@ -1,3 +1,23 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  min-height: 100vh;
+  background: #232427;
+
+}
+
+.img_background {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  object-fit: cover;
+  z-index: -1;
+  top: 0;
+  left: 0
+}
+
 .button-style4 {
     padding: 5px;
     border: 3px solid #b3871f;
@@ -6,14 +26,16 @@
     border-radius: 5px 0 0 5px;
     outline: none;
     color: #daa520; ;
-    background-image: url("https://th.bing.com/th/id/R.10b0f188960224fa1d08fd6aa0edaa56?rik=AY%2bIXC%2fw%2fRJw3w&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f2%2fe%2f6%2f1056050-epic-gaming-wallpapers-2560x1600-download.jpg&ehk=EumFZkUr3hAyUt0vG9s4Pqs1D1ytL7IVvzES6t%2bMn1Q%3d&risl=1&pid=ImgRaw&r=0");
     background-color: darkgrey;
     z-index: 10000;
     background: #fff  no-repeat 90% 50%;
-    top: 50%;
-    right: 50%;
-    position: fixed;
+    position: relative;
     
+  }
+
+  h2 {
+  color: #daa520; ;
+
   }
   
   .button-style4 button {
@@ -37,5 +59,9 @@
   font-size: 0.9rem;
   text-align: center;
   
+  }
+
+  .button-style4:hover {
+    color: black;
   }
   

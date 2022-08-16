@@ -3,8 +3,6 @@ export const FETCH_VIDEOGAMES = "FETCH_VIDEOGAMES"
 export const FETCH_GENRE = "FETCH_GENRE"
 export const FETCH_PLATFORM = "FETCH_PLATFORM"
 export const SEARCH_VIDEOGAMES = "SEARCH_VIDEOGAMES"
-export const SEARCH_BYPLATFORM = "SEARCH_BYPLATFORM"
-export const SEARCH_BYGENRE = "SEARCH_BYGENRE"
 export const SORT = "SORT"
 export const DELETE_VIDEOGAME = "DELETE_VIDEOGAME"
 export const CLEAR = "CLEAR"
@@ -46,6 +44,9 @@ export function searchVideogame(search){
                 type: SEARCH_VIDEOGAMES,
                 payload: videogames.data
             })
+            console.log(videogames.data)
+            dispatch(filtered())
+            dispatch(createPaginationArray())
         })
         .catch((error) =>{
             console.log(error)
@@ -68,28 +69,6 @@ export function fetchPlatform(){
     }
 }
 
-
-export function search_ByGenre(genre){
-    return {
-        type: SEARCH_BYGENRE,
-        payload: genre
-    }
-    // function(dispatch){
-    //     axios.get( "http://localhost:3001/api/Genre?name=" + value)
-    //     .then((genre) =>{
-    //         dispatch({
-    //             type: SEARCH_BYGENRE,
-    //             payload: {data: genre.data, genreName: value}
-
-
-    //         })
-
-    //     })
-    //     .catch((error) =>{
-    //         console.log(error)
-    //     })
-    // }
-}
 
 export function fetchGenre(){
     return function(dispatch){
@@ -121,20 +100,7 @@ export function deleteVideogame(id){
     }
 }
 
-export function search_ByPlatform(value){
-    return function(dispatch){
-        axios.get( "http://localhost:3001/api/platform?name=" + value)
-        .then((platform) =>{
-            dispatch({
-                type: SEARCH_BYPLATFORM,
-                payload: platform.data
-            })
-        })
-        .catch((error) =>{
-            console.log(error)
-        })
-    }
-}
+
 
 export function sort(order) {
     return{

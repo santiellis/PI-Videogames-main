@@ -1,10 +1,12 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createPaginationArray, filtered } from "../store/actions"
 import "./searchBar.css"
 
 
 
 export default function SearchByPlatform(){
+    let currentPlatform = useSelector((state) => state.currentPlatform)
+
 
     let dispatch = useDispatch()
     function onChange(event) {
@@ -12,8 +14,8 @@ export default function SearchByPlatform(){
         dispatch(createPaginationArray())
         }
 
-    return  <select  id="dropdown" className="select-style3"  onChange={onChange}>
-                <option hidden>Platform</option>
+    return  <select  id="dropdown" className="select-style3"  onChange={onChange} value={currentPlatform}>
+                <option value="Platform" hidden>Platform</option>
                 <option value="Android">Android</option>
                 <option value="Dreamcast">Dreamcast</option>
                 <option value="iOS">iOS</option>

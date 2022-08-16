@@ -53,7 +53,7 @@ router.get("/", async (req,res,next) => {
 
 router.get("/:id", async (req,res,next) => {
     try {
-       const {id, name} = req.params
+       const {id} = req.params
        if ((Genre.id === Videogame.genreId) && Videogame.name){
         console.log(Genre.id)
 
@@ -72,7 +72,7 @@ router.get("/:id", async (req,res,next) => {
 router.post("/", async (req,res,next) => {
     console.log(req.body)
     try {
-       const {name, image, description, rating, released} = req.body
+       const {name, image, description, rating, released, Genres, Platforms} = req.body
        const searchByName = await Videogame.findOne({ where: { name: name } });
     if (searchByName === null) {
         Videogame.findAll({
@@ -84,7 +84,7 @@ router.post("/", async (req,res,next) => {
             let lastVideogameInOrderAsc = response.pop()
             let id = lastVideogameInOrderAsc.id 
             id++
-            return Videogame.create({
+             Videogame.create({
                     id,
                     name,
                     image,
@@ -93,7 +93,13 @@ router.post("/", async (req,res,next) => {
                     released,
                 })
             .then((newVideogame) =>{
-                res.status(201).send(newVideogame)
+                newVideogame.addGenre(Genres).then((addedGenres) =>{
+                    newVideogame.addPlatform(Platforms).then((addedPlatforms) =>{
+                        res.status(201).send(newVideogame)
+                    })
+                    .catch(error => next(error))
+                })
+                .catch(error => next(error))
             })
            })
     }else {

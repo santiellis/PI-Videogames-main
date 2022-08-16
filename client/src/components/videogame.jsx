@@ -5,7 +5,7 @@ export default function Videogame({id, name, image, rating, genre}){
              <div className="card">
                 <div className="box">
                     <div className="content">
-                        <Link to={`/${id}`}>  
+                        <Link to={`/home/${id}`}>  
                         <h2>Rating:{rating}</h2>
                         <h3>{name}</h3>
                         <img  src={image} alt= {"image" + name}/>

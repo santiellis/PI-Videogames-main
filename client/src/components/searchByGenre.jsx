@@ -1,17 +1,19 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createPaginationArray, filtered } from "../store/actions"
 import "./searchBar.css"
 
 
 export default function SearchByGenre(){
     let dispatch = useDispatch()
+    let currentGenre = useSelector((state) => state.currentGenre)
+
     function onChange(event) {
         dispatch(filtered({Genre: event.target.value}))
         dispatch(createPaginationArray())
         }
         // const genreSelected = 0
-    return  <select id="dropdown" className="select-style2"  onChange={onChange}>
-                <option hidden>Genre</option>
+    return  <select id="dropdown" className="select-style2"  onChange={onChange} value={currentGenre}>
+                <option value="Genre" hidden> Genre</option>
                 <option value="Action">Action</option>
                 <option value="Adventure">Adventure</option>
                 <option value="Arcade">Arcade</option>

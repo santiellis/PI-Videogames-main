@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { searchVideogame } from "../store/actions"
 import "./searchBar.css"
 import "./order.jsx"
@@ -8,16 +8,20 @@ import "./searchByPlatform"
 
 export default function SearchBar() {
     const [search, setSearch] = useState('')
+    let searchData = useSelector((state) => state.currentSearch)
+    console.log(searchData)
+
     let dispatch = useDispatch()
     function onSubmit(event) {
         event.preventDefault();
         dispatch(searchVideogame(search))
-        document.getElementsByClassName("dropdown").selectedIndex = 0;
         document.getElementById("Form").reset();
     }
 
     function onInputText(event) {
         event.preventDefault();
+        searchData = event.target.value
+        console.log(searchData)
         setSearch(event.target.value)
     }
 

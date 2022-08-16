@@ -12,7 +12,6 @@ import SearchByPlatform from './components/searchByPlatform';
 import RedirectToAddVideogame from './components/redirectAddVideogame';
 import RedirectHome from './components/redirectHome';
 import Clear from './components/clear';
-import OrderByRating from './components/orderByRating';
 import ToHomeFromLanding from './components/toHomeFromLanding';
 
 
@@ -30,12 +29,13 @@ function App() {
       <VideogameDetails />
       <RedirectHome/>
       </Route>
+
+      
       <Route path={"/home"}>
         <SearchBar/>
         <SearchByGenre/>
         <SearchByPlatform/>
         <Order/>
-        <OrderByRating/>
         <Clear/>
         <RedirectToAddVideogame/>
         <Videogames />

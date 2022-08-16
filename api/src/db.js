@@ -109,12 +109,8 @@ const fillVideogames = async (params) => {
                   released: videogame.released,
                  
               })
-            console.log("Seteando generos en juego...")
             await createVideogame.setGenres( videogame.genres.map((genre) => genre.id))
-            console.log("Seteadisimos esos generos")
-            console.log("Seteando plataformas en juego")
             await createVideogame.setPlatforms(videogame.platforms.map((platforms) => platforms.platform.id ))}
-            console.log("Seteadisimas esas plataformas :DDDDDD")
           console.log("Ze finish")
     }
   } catch (error) {
@@ -127,22 +123,9 @@ const fillVideogames = async (params) => {
 const fillPlatform = async (platformId, platformName) => {
   try {
     
-    // let platformFromApi =  await axios.get('https://api.rawg.io/api/games?key=' + API_KEY)
-    // let datosPlatform = platformFromApi.data.results
     let onePlatformId = platformId
     let onePlatformName = platformName
-    // let datosOrdenadosPlatform = datosPlatform.sort((a,b) => {
-    //   return a.id - b.id
-    // }).map((platform) =>{
-    //   return {
-    //       platform: platform.platforms.map((platform) =>  {
-    //         return [platform.platform.id,platform.platform.name] 
-    //       }),
-    //       name: platform.platforms.map((platform) =>  {
-    //         return platform.platform.name 
-    //         }),
-    //   }
-    // })
+
     let datosOrdenadosPlatform = {
       id : onePlatformId,
       name: onePlatformName,
@@ -155,7 +138,7 @@ const fillPlatform = async (platformId, platformName) => {
   }
 }
 
-//fillGenre()
+// fillGenre()
 
 
 

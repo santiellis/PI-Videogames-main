@@ -14,7 +14,6 @@ export default function VideogameDetails(){
         axios.get("http://localhost:3001/api/Videogame/" + id)
         .then((response) =>{
             setVideogame(response.data)
-            console.log(response)
             setGenre(response.data.Genres.map((genre) =>{
                return genre.name
             }))
@@ -39,14 +38,14 @@ export default function VideogameDetails(){
         <img src={videogame.image} alt= {"image" + videogame.name}/>
         </div>
         <div className="text" dangerouslySetInnerHTML={{__html: videogame.description}}/>
-        <h3>{videogame.rating}</h3>
-        <div>{genre + ""}</div>
+        <h3 className="text">{videogame.rating}</h3>
+        <div className="text" >{genre + ""}</div>
         <br/>
-        <h3>{videogame.released}</h3>
-        <h3>{platform + ""}</h3>
+        <h3 className="text">{videogame.released}</h3>
+        <h3 className="text" >{platform + ""}</h3>
 
         </> :
-        <div>{platform}</div>
+        <div>{null}</div>
                  
         }
       </div>    

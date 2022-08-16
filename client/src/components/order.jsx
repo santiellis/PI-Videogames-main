@@ -1,4 +1,4 @@
-import { useDispatch, useSelector, useStore } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import {ASCENDENTE, DESCENDENTE} from "../const/orderByName"
 import { sort, createPaginationArray, filtered } from "../store/actions"
 import "./searchBar.css"
@@ -6,7 +6,6 @@ import "./searchBar.css"
 
 export default function Order(){
    const dispatch = useDispatch()     
-    const store = useStore()
     let order = useSelector((state) => state.currentOrder)
 
 
@@ -22,6 +21,8 @@ export default function Order(){
     return <select id="dropdown" className="select-style" name="Order by Name" onChange={onSelect} value={order}>
         <option value={ASCENDENTE}>A-Z</option>
         <option value={DESCENDENTE}>Z-A</option>
+        <option value="Rating Low to High">Rating Low to High</option>
+        <option value="Rating High to Low">Rating High to Low</option>
 
     </select>
 }

@@ -5,7 +5,7 @@ import Videogame from "./videogame"
 import "./videogamesBlocks.css"
 
 export default function Videogames(){
-    let videogames = useSelector((state) => state.videogames)
+
     let pagination = useSelector((state) => state.paginationArray)
     let currentPage = useSelector((state) => state.currentPage)
     let dispatch = useDispatch()
@@ -14,7 +14,7 @@ export default function Videogames(){
         dispatch(fetchVideogame())
     }, [dispatch])
 
-    useEffect(()=> console.log(currentPage),[currentPage])
+
     
     if(pagination[0]){
         return <div className="container">
@@ -26,14 +26,7 @@ export default function Videogames(){
                 rating={videogame.rating} 
                 genre={videogame.Genres.map((minigenre, index) => minigenre.name)}/>
     })}
-            {/* {videogames.map((videogame) =>{ 
-                return <Videogame key={videogame.id} 
-                id={videogame.id} 
-                name={videogame.name} 
-                image={videogame.image} 
-                rating={videogame.rating} 
-                genre={videogame.Genres.map((minigenre, index) => minigenre.name)}/>
-            })} */}
+
             </div>
     
     }else{

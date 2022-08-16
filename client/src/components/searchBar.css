@@ -55,7 +55,7 @@ input {
 .select-style {
     padding: 5px;
     border: 3px solid #b3871f;
-    width: 90px;
+    width: 190px;
     height: 30px;
     border-radius: 5px 0 0 5px;
     outline: none;
@@ -103,7 +103,7 @@ input {
   z-index: 10000;
   background: #fff  no-repeat 90% 50%;
   position:fixed;
-  left: 330px;
+  left: 430px;
   top: 0;
 }
 
@@ -142,7 +142,7 @@ text-align: center;
   z-index: 10000;
   background: #fff  no-repeat 90% 50%;
   position:fixed;
-  left: 420px;
+  left: 520px;
   top: 0;
 }
 

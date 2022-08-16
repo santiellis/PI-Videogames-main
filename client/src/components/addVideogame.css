@@ -33,7 +33,6 @@
   width:400px;
   }
   .formItem input, .formItem textarea {
-    background:#2b2e31;
     color:#9fa4a8;		
     text-shadow: 1px 1px #1e2022;		
     letter-spacing:2px;
@@ -121,4 +120,23 @@
       border-right:5px solid #752c2d;
       left:5px;
       top:12px;
+  }
+
+  .Horizontal {
+    display: flex;
+    justify-content: center;
+  }
+
+  .Space{
+    padding: 0px 0px 10px 5px;
+  }
+
+  .botonVerde {
+    background-color: green;
+    color: green
+  }
+
+  .botonRojo {
+    background-color: red;
+    color: red
   }
