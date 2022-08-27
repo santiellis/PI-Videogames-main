@@ -1,4 +1,4 @@
-import "./toHomeFromLanding.css"
+import "./button1.css"
 
 
 export default function ToHomeFromLanding(){

@@ -10,6 +10,8 @@ export const SORT_RATING = "SORT_RATING"
 export const CREATE_PAGINATION_ARRAY = "CREATE_PAGINATION_ARRAY"
 export const CHANGE_PAGE = "CHANGE_PAGE"
 export const FILTERED = "FILTERED"
+export const LOADING_FALSE = "LOADING_FALSE"
+export const LOADING_TRUE = "LOADING_TRUE"
 // const {
 //     HTTPHOST
 //   } = process.env
@@ -141,6 +143,20 @@ export function changePage(payload){
 export function filtered(payload) {
     return {
         type: FILTERED,
+        payload
+    }
+}
+
+export function loading_false(payload){
+    return {
+        type: LOADING_FALSE,
+        payload
+    }
+}
+
+export function loading_true(payload){
+    return{
+        type: LOADING_TRUE,
         payload
     }
 }

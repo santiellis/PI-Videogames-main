@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { fetchGenre, fetchPlatform } from "../store/actions"
 import "./addVideogame.css"
+import "./select.css"
+import "./button1.css"
 export default function Videogame(){
     let [videogame, setVideogame] = useState({name: "",image: "", description: "", rating: 0, released: "", Genres: [], Platforms: []})
     const genres = useSelector((state) => state.genres);
@@ -60,28 +62,27 @@ const checkValue = () =>{
 
 
   const selectGenre = (e) => {
-    console.log(e)
-    console.log(e.target[e.target.selectedIndex].id)
-
+    if(videogame.Genres.length < 2){
     setVideogame({
         ...videogame,
-        Genres: [...videogame.Genres, e.target[e.target.selectedIndex].id],
-      });
-
+        Genres: videogame.Genres.includes(e.target[e.target.selectedIndex].id) ? videogame.Genres : [...videogame.Genres ,e.target[e.target.selectedIndex].id],
+      });}
+      else{document.getElementById('SpanColorGenre').hidden = false}
   };
 
   const selectPlatforms = (e) => {
-    console.log(e.target.value)
-
+    if(videogame.Platforms.length < 2){
+      
     setVideogame({
         ...videogame,
         Platforms: [...videogame.Platforms,  e.target[e.target.selectedIndex].id],
-      });
-
+      });}
+      else{document.getElementById('SpanColorPlatform').hidden = false}
   };
 
 
   const handleDeleteGenres = (e) => {
+    document.getElementById('SpanColorGenre').hidden = true
     setVideogame({
       ...videogame,
       Genres: videogame.Genres.filter((genre) => genre !== e),
@@ -89,6 +90,7 @@ const checkValue = () =>{
   };
 
   const handleDeletePlatforms = (e) => {
+    document.getElementById('SpanColorPlatform').hidden = true
     setVideogame({
       ...videogame,
       Platforms: videogame.Platforms.filter((platform) => platform !== e),
@@ -110,8 +112,9 @@ const checkValue = () =>{
             <input onChange={onInput} type="text" name="description" placeholder="Details..."  value={videogame.description} />
             <input onChange={onInput} type="number" step={0.1} name="rating" placeholder="Rating..."  value={videogame.rating} />
             <input onChange={onInput} type="date" name="released"   value={videogame.released} />
-            <div>
-            <select
+            
+            <div className="cascade">
+            <select className="button-style11"
               onChange={(e) => selectGenre(e)}
                 name="Genres"
             >
@@ -121,9 +124,11 @@ const checkValue = () =>{
                   <option id={e.id} key={e.id} value={e.name}>
                     {e.name}
                   </option>
+                  
                 );
               })}
             </select>  
+            <span id="SpanColorGenre" hidden={true}>There cannot be more than two genres</span>
             </div>
             <br/>
             <div className="Horizontal">
@@ -131,18 +136,19 @@ const checkValue = () =>{
                 let nameGenre = genres.filter(genre => genre.id === parseInt(e))
                 return (
                   <div key={e} className="Space">
-                    <button
+                    <button className="button-style4"
                       onClick={() => handleDeleteGenres(e)}
                     >
                       {nameGenre[0].name} x
                     </button>
                   </div>
+                  
                 );
               })}
             </div>
            
-            <div>
-            <select
+            <div className="cascade">
+            <select className="button-style11"
               onChange={(e) => selectPlatforms(e)}
                 name="Platforms"
             >
@@ -154,7 +160,9 @@ const checkValue = () =>{
                   </option>
                 );
               })}
-            </select>  
+            </select> 
+            <span id="SpanColorPlatform" hidden={true}>There cannot be more than two platforms</span>
+
             </div>
             <br/>
             <div className="Horizontal">
@@ -163,7 +171,7 @@ const checkValue = () =>{
                 let namePlatform = platforms.filter(platform => platform.id === parseInt(e))
                   return (
                     <div key={e} className="Space">
-                      <button
+                      <button className="button-style4"
                         onClick={() => handleDeletePlatforms(e)}
                       >
                         {namePlatform[0].name} x
@@ -174,7 +182,7 @@ const checkValue = () =>{
               : null}
           </div>
 
-            <input type="submit" disabled={checkValue()} className={checkValue() === false ? "botonVerde" : "botonRojo"}/>
+            <input type="submit" disabled={checkValue()} className={checkValue() === false ? "greenButton" : "redButton"}/>
             </form>
 
         </> :

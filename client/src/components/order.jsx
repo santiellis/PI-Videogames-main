@@ -7,17 +7,19 @@ import "./searchBar.css"
 export default function Order(){
    const dispatch = useDispatch()     
     let order = useSelector((state) => state.currentOrder)
-
+    let loadingCheck = useSelector((state) => state.loading)
 
     function onSelect(event) {
         dispatch(sort(event.target.value))
         dispatch(filtered())
         dispatch(createPaginationArray())
-        
-        
-        console.log()
         }
+   
         
+if(loadingCheck === true) {
+            return <span></span>
+          }
+
     return <select id="dropdown" className="select-style" name="Order by Name" onChange={onSelect} value={order}>
         <option value={ASCENDENTE}>A-Z</option>
         <option value={DESCENDENTE}>Z-A</option>

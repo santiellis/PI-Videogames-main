@@ -1,5 +1,5 @@
 import { ASCENDENTE, DESCENDENTE } from "../../const/orderByName"
-import {FETCH_VIDEOGAMES, FILTERED, SEARCH_VIDEOGAMES, SORT, DELETE_VIDEOGAME, FETCH_PLATFORM, FETCH_GENRE, CLEAR, CREATE_PAGINATION_ARRAY, CHANGE_PAGE} from "../actions"
+import {LOADING_TRUE,LOADING_FALSE, FETCH_VIDEOGAMES, FILTERED, SEARCH_VIDEOGAMES, SORT, DELETE_VIDEOGAME, FETCH_PLATFORM, FETCH_GENRE, CLEAR, CREATE_PAGINATION_ARRAY, CHANGE_PAGE} from "../actions"
 
 const initialState = {
     videogames: [],
@@ -17,6 +17,7 @@ const initialState = {
     currentOrder: ASCENDENTE,
     currentGenre: "Genre",
     currentPlatform: "Platform",
+    loading: true
 }
 
 
@@ -68,20 +69,20 @@ export default function reducer(state = initialState, action){
             }
 
         case SORT: 
-            console.log(...state.allVideogamesSaved)
+            // console.log(...state.allVideogamesSaved)
         if(state.searchedVideogame.length === 0){
             let orderedByNameVideogames = [...state.allVideogamesSaved]
             
             if (action.payload === ASCENDENTE){
             orderedByNameVideogames = orderedByNameVideogames.sort((a,b) => {
-                if (a.name < b.name ){
+                if (a.name.toLowerCase() < b.name.toLowerCase() ){
                     return action.payload === ASCENDENTE ? -1 : 1;
                 }
                 return 0
             })}
             if (action.payload === DESCENDENTE){
                 orderedByNameVideogames = orderedByNameVideogames.sort((a,b) => {
-                if (a.name > b.name){
+                if (a.name.toLowerCase() > b.name.toLowerCase()){
                     return action.payload === ASCENDENTE ? 1 : -1;
                 }
                 return 0;
@@ -239,6 +240,16 @@ export default function reducer(state = initialState, action){
                 currentPage: 1
 
                 
+            }
+
+            case LOADING_TRUE: return {
+                ...state,
+                loading: true,
+            }
+            
+            case LOADING_FALSE: return{
+                ...state,
+                loading: false
             }
 
         default: 

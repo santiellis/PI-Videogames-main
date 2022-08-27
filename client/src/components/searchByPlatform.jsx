@@ -6,14 +6,16 @@ import "./searchBar.css"
 
 export default function SearchByPlatform(){
     let currentPlatform = useSelector((state) => state.currentPlatform)
-
-
+    let loadingCheck = useSelector((state) => state.loading)
     let dispatch = useDispatch()
     function onChange(event) {
         dispatch(filtered({Platform: event.target.value}))
         dispatch(createPaginationArray())
         }
-
+    
+    if(loadingCheck === true) {
+        return <span></span>
+      }    
     return  <select  id="dropdown" className="select-style3"  onChange={onChange} value={currentPlatform}>
                 <option value="Platform" hidden>Platform</option>
                 <option value="Android">Android</option>

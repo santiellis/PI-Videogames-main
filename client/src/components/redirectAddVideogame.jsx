@@ -1,7 +1,13 @@
+import { useSelector } from "react-redux";
 import "./searchBar.css"
 
 
 export default function RedirectToAddVideogame(){
+    let loadingCheck = useSelector((state) => state.loading)
+
+    if(loadingCheck === true) {
+        return <span></span>
+      }
 
     function redirect()
     {

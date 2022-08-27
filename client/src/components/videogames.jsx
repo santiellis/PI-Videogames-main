@@ -1,22 +1,28 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchVideogame } from "../store/actions"
+import { fetchVideogame, loading_false } from "../store/actions"
 import Videogame from "./videogame"
 import "./videogamesBlocks.css"
+import { React } from 'react';
+import loader from "./LoadingScreen.gif"
+import './loading.css'
 
 export default function Videogames(){
 
     let pagination = useSelector((state) => state.paginationArray)
     let currentPage = useSelector((state) => state.currentPage)
+    let loadingCheck = useSelector((state) => state.loading)
     let dispatch = useDispatch()
 
     useEffect(() =>{
         dispatch(fetchVideogame())
+        setTimeout(() =>{dispatch(loading_false())}, 4000)
+
     }, [dispatch])
 
 
     
-    if(pagination[0]){
+    if(loadingCheck === false && pagination[0]){
         return <div className="container">
             {pagination[currentPage -1].map((videogame) =>{ 
                 return <Videogame key={videogame.id} 
@@ -30,6 +36,10 @@ export default function Videogames(){
             </div>
     
     }else{
-        return <div>loading</div>
+        return (
+            <div className='loader-container'>
+                <img src={loader} alt=' '/>
+            </div>
+        );
     
 }}

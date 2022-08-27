@@ -8,6 +8,7 @@ const key = process.env.API_KEY
 
 
 router.get("/", async (req,res,next) => {
+    //?name=
     let name = req.query.name
     let DBPromiseGames
     try {
@@ -52,10 +53,11 @@ router.get("/", async (req,res,next) => {
 
 
 router.get("/:id", async (req,res,next) => {
+    //videogames/28
     try {
        const {id} = req.params
        if ((Genre.id === Videogame.genreId) && Videogame.name){
-        console.log(Genre.id)
+        // console.log(Genre.id)
 
          let game = await Videogame.findByPk(
             id, 

@@ -38,7 +38,7 @@ const { Videogame, Genre, Platform } = sequelize.models;
 Videogame.belongsToMany(Genre, {through: "VideoGenre"})
 Genre.belongsToMany(Videogame, {through: "VideoGenre"})
 
-
+//Tablas Intermedias
 
 Videogame.belongsToMany(Platform, {through: "VideoPlatform"})
 Platform.belongsToMany(Videogame, {through: "VideoPlatform"})
@@ -72,17 +72,17 @@ const fillGenre = async (params) => {
 
 const fillVideogames = async (params) => {
   try {
-    
+    // Cantidad de Pag que voy a traer, desde i = 1, porque 0 no existe
     for (let i = 1; i < 6; i++) {
       
       let videogamesApi =  await axios.get('https://api.rawg.io/api/games?key=' + API_KEY + '&page=' + i)
-      
+      //Pedido a la API
       
       let datosVideogames = videogamesApi.data.results
       let datosOrdenadosVideogames = datosVideogames.sort((a,b) => {
         return a.id - b.id
       })
-      console.log("Creando jueguiños")
+      console.log("Creando juegos")
       for (let i = 0; i < datosOrdenadosVideogames.length; i++) {
         let videogame = datosOrdenadosVideogames[i]
         let platformId = videogame.platforms.map((platform) =>  {
@@ -132,6 +132,7 @@ const fillPlatform = async (platformId, platformName) => {
     }
     console.log("Fetcheando plataformas...")
       const finishedFetchingPlatforms = await Platform.findOrCreate({where: datosOrdenadosPlatform})
+      //Lo encuentra o lo crea
     console.log("Fetcheadisimas esas plataformas :)")
   } catch (error) {
     console.log(error)
@@ -139,7 +140,8 @@ const fillPlatform = async (platformId, platformName) => {
 }
 
 // fillGenre()
-
+//llamo a la función fillGenre para hacer el Fetch de la API y asi crearlo en la base de datos
+//Primero se llama a Genres para que cuando se haga Videogames, esten los generos y asi juntarlos atravez de una tabla
 
 
 module.exports = {

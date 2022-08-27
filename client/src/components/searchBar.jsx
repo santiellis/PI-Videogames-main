@@ -9,8 +9,7 @@ import "./searchByPlatform"
 export default function SearchBar() {
     const [search, setSearch] = useState('')
     let searchData = useSelector((state) => state.currentSearch)
-    console.log(searchData)
-
+    let loadingCheck = useSelector((state) => state.loading)
     let dispatch = useDispatch()
     function onSubmit(event) {
         event.preventDefault();
@@ -25,6 +24,10 @@ export default function SearchBar() {
         setSearch(event.target.value)
     }
 
+
+    if(loadingCheck === true) {
+        return <span></span>
+      }
     return <nav id="myInput">
                 <div className="wrap">
                     <form id="Form" onSubmit={onSubmit}>

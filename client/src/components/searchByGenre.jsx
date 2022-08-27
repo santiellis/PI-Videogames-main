@@ -6,12 +6,16 @@ import "./searchBar.css"
 export default function SearchByGenre(){
     let dispatch = useDispatch()
     let currentGenre = useSelector((state) => state.currentGenre)
+    let loadingCheck = useSelector((state) => state.loading)
 
     function onChange(event) {
         dispatch(filtered({Genre: event.target.value}))
         dispatch(createPaginationArray())
         }
-        // const genreSelected = 0
+
+    if(loadingCheck === true) {
+            return <span></span>
+          }    
     return  <select id="dropdown" className="select-style2"  onChange={onChange} value={currentGenre}>
                 <option value="Genre" hidden> Genre</option>
                 <option value="Action">Action</option>
