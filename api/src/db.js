@@ -137,7 +137,7 @@ const fillPlatform = async (platformId, platformName) => {
   }
 }
 
-// fillGenre()
+fillGenre()
 //Call the function fillGenre
 
 module.exports = {
