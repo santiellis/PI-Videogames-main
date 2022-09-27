@@ -69,7 +69,6 @@ export default function reducer(state = initialState, action){
             }
 
         case SORT: 
-            // console.log(...state.allVideogamesSaved)
         if(state.searchedVideogame.length === 0){
             let orderedByNameVideogames = [...state.allVideogamesSaved]
             

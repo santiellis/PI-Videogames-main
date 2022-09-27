@@ -10,7 +10,6 @@ export default function Videogame(){
     let [videogame, setVideogame] = useState({name: "",image: "", description: "", rating: 0, released: "", Genres: [], Platforms: []})
     const genres = useSelector((state) => state.genres);
     const platforms = useSelector((state) => state.platforms)
-    console.log(videogame)
     let dispatch = useDispatch()
     
     
@@ -96,11 +95,6 @@ const checkValue = () =>{
       Platforms: videogame.Platforms.filter((platform) => platform !== e),
     });
   };
-
-
-  useEffect(() => {
-    console.log(videogame)
-  }, [videogame])
 
     return <div id="formContainer">
          {  videogame   ?

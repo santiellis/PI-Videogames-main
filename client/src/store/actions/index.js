@@ -12,13 +12,6 @@ export const CHANGE_PAGE = "CHANGE_PAGE"
 export const FILTERED = "FILTERED"
 export const LOADING_FALSE = "LOADING_FALSE"
 export const LOADING_TRUE = "LOADING_TRUE"
-// const {
-//     HTTPHOST
-//   } = process.env
-
-
-
-
 
 export function fetchVideogame(){
     return async function(dispatch){

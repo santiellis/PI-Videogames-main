@@ -53,19 +53,15 @@ router.get("/", async (req,res,next) => {
 
 
 router.get("/:id", async (req,res,next) => {
-    //videogames/28
     try {
        const {id} = req.params
-       if ((Genre.id === Videogame.genreId) && Videogame.name){
-        // console.log(Genre.id)
 
          let game = await Videogame.findByPk(
             id, 
-            {include:[ Genre, Platform]
+            {include:[Genre, Platform]
             }
             )
         res.status(201).send(game)
-    }
    } catch (error) {
     next(error)
    }

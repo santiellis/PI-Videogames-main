@@ -3,8 +3,7 @@ import "./button1.css"
 
 export default function ToHomeFromLanding(){
 
-    function redirect()
-    {
+    function redirect(){
     window.location.href="/home";
     }
         return <div >

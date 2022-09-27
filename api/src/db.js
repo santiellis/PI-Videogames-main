@@ -72,11 +72,10 @@ const fillGenre = async (params) => {
 
 const fillVideogames = async (params) => {
   try {
-    // Cantidad de Pag que voy a traer, desde i = 1, porque 0 no existe
     for (let i = 1; i < 6; i++) {
       
       let videogamesApi =  await axios.get('https://api.rawg.io/api/games?key=' + API_KEY + '&page=' + i)
-      //Pedido a la API
+      //API Request
       
       let datosVideogames = videogamesApi.data.results
       let datosOrdenadosVideogames = datosVideogames.sort((a,b) => {
@@ -132,7 +131,6 @@ const fillPlatform = async (platformId, platformName) => {
     }
     console.log("Fetcheando plataformas...")
       const finishedFetchingPlatforms = await Platform.findOrCreate({where: datosOrdenadosPlatform})
-      //Lo encuentra o lo crea
     console.log("Fetcheadisimas esas plataformas :)")
   } catch (error) {
     console.log(error)
@@ -140,9 +138,7 @@ const fillPlatform = async (platformId, platformName) => {
 }
 
 // fillGenre()
-//llamo a la función fillGenre para hacer el Fetch de la API y asi crearlo en la base de datos
-//Primero se llama a Genres para que cuando se haga Videogames, esten los generos y asi juntarlos atravez de una tabla
-
+//Call the function fillGenre
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

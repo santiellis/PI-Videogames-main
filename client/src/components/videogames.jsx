@@ -1,9 +1,9 @@
+import { React } from 'react';
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchVideogame, loading_false } from "../store/actions"
 import Videogame from "./videogame"
 import "./videogamesBlocks.css"
-import { React } from 'react';
 import loader from "./LoadingScreen.gif"
 import './loading.css'
 

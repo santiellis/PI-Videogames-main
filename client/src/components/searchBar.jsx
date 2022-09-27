@@ -20,7 +20,6 @@ export default function SearchBar() {
     function onInputText(event) {
         event.preventDefault();
         searchData = event.target.value
-        console.log(searchData)
         setSearch(event.target.value)
     }
 
